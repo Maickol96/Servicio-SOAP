@@ -30,6 +30,11 @@ Proyecto que consume un servicio web SOAP (Simple Object Access Protocol) para r
 | `POST`      | `/multiplicar`| `numberA`, `numberB`     | `/multiplicar?numberA=6&numberB=7`|
 | `POST`      | `/dividir`    | `numberA`, `numberB`     | `/dividir?numberA=20&numberB=5`   |
 
+## Pruebas 🧪
+- **mporta docs/postman_collection.json en Postman**
+- **jecuta requests contra http://localhost:8080**
+
+
 ## Estructura 📂
 ```text
 src/
@@ -42,6 +47,4 @@ src/
 └── test/                 # Unit tests                 # Pruebas
 
 
-## Pruebas 🧪
-- **mporta docs/postman_collection.json en Postman**
-- **jecuta requests contra http://localhost:8080**
+
