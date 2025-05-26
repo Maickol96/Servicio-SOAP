@@ -20,3 +20,26 @@ Proyecto que consume un servicio web SOAP (Simple Object Access Protocol) para r
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/Maickol96/Servicio-SOAP.git
+   
+## Endpoints REST 📡
+
+| Método HTTP | Endpoint      | Parámetros               | Ejemplo de Uso                    |
+|-------------|---------------|--------------------------|------------------------------------|
+| `POST`      | `/sumar`      | `numberA`, `numberB`     | `/sumar?numberA=5&numberB=3`      |
+| `POST`      | `/restar`     | `numberA`, `numberB`     | `/restar?numberA=10&numberB=4`    |
+| `POST`      | `/multiplicar`| `numberA`, `numberB`     | `/multiplicar?numberA=6&numberB=7`|
+| `POST`      | `/dividir`    | `numberA`, `numberB`     | `/dividir?numberA=20&numberB=5`   |
+
+## Estructura 📂
+src/
+├── main/
+│   ├── java/com/soap/
+│   │   ├── client/       # Cliente SOAP
+│   │   ├── controller/   # Lógica REST
+│   │   └── wsdl/         # Clases WSDL
+│   └── resources/        # Configs
+└── test/                 # Pruebas
+
+## Pruebas 🧪
+- **mporta docs/postman_collection.json en Postman**
+- **jecuta requests contra http://localhost:8080**
