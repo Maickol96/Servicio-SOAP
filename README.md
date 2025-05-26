@@ -31,14 +31,16 @@ Proyecto que consume un servicio web SOAP (Simple Object Access Protocol) para r
 | `POST`      | `/dividir`    | `numberA`, `numberB`     | `/dividir?numberA=20&numberB=5`   |
 
 ## Estructura 📂
+```text
 src/
 ├── main/
 │   ├── java/com/soap/
-│   │   ├── client/       # Cliente SOAP
-│   │   ├── controller/   # Lógica REST
-│   │   └── wsdl/         # Clases WSDL
-│   └── resources/        # Configs
-└── test/                 # Pruebas
+│   │   ├── client/       # SOAP client configuration
+│   │   ├── controller/   # REST controllers
+│   │   └── wsdl/         # Generated WSDL classes
+│   └── resources/        # Configuration files
+└── test/                 # Unit tests                 # Pruebas
+
 
 ## Pruebas 🧪
 - **mporta docs/postman_collection.json en Postman**
