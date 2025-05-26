@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.soap</groupId>
+    <artifactId>SpringBootSoap</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>SpringBootSoap</name>
+    <description>Spring Boot Soap Client</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web-services</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>annotationProcessor</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>annotationProcessor</scope>
+        </dependency>
+
+        <!-- Dependencias adicionales necesarias para JAXB en Spring Boot 3.x -->
+        <!-- Spring Boot 3 usa Jakarta EE en lugar de Java EE, por eso necesitamos estas dependencias -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- Inicio de configuración generar clases desde archivo WSDL -->
+            <!-- Plugin actualizado para Spring Boot 3.x que usa Jakarta -->
+            <plugin>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-maven-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-from-wsdl</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <!-- Configuración para archivos WSDL desde URL -->
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <!-- Es mejor práctica generar en target en lugar de src/main/java -->
+                    <generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
+                    <generatePackage>com.soap.wsdl</generatePackage>
+                    <schemas>
+                        <schema>
+                            <url>http://www.dneonline.com/calculator.asmx?WSDL</url>
+                        </schema>
+                    </schemas>
+                </configuration>
+
+                <!-- Configuración para archivos WSDL físicos (descomentarla si necesitas usar archivo local) -->
+                <!--
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>com.soap.wsdl</generatePackage>
+                    <generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
+                    <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>
+                    <schemaFiles>CalculatorApi.wsdl</schemaFiles>
+                    <bindingDirectory>${project.basedir}/src/main/resources/wsdl</bindingDirectory>
+                    <bindingFiles>binding.xjb</bindingFiles>
+                </configuration>
+                -->
+
+                <!-- Configuración alternativa más detallada para archivos WSDL físicos -->
+                <!--
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <sources>
+                        <source>${project.basedir}/src/main/resources/wsdl/CalculatorApi.wsdl</source>
+                    </sources>
+                    <packageName>com.soap.wsdl</packageName>
+                    <outputDirectory>${project.build.directory}/generated-sources/jaxb</outputDirectory>
+                    <clearOutputDir>false</clearOutputDir>
+                </configuration>
+                -->
+            </plugin>
+
+            <!-- Plugin para agregar el directorio de fuentes generadas al classpath -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/jaxb</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
